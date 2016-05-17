@@ -8,21 +8,9 @@
   },
   "description": "Simple authentication token provider for ASP.NET Core.",
   "frameworks": {
-    "net451": {
-      "frameworkAssemblies": {
-        "System.Runtime": {
-          "type": "build",
-          "version": "4.0.0.0"
-        }
-      }
-    },
     "netstandard1.3": {
       "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516"
+        "System.Runtime": "4.1.0-rc2-24027"
       }
     }
   },

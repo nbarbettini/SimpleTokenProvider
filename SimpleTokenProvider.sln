@@ -3,14 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleTokenProvider", "src\SimpleTokenProvider.xproj", "{F2336869-C552-40AC-8507-36A3C2A2C1DE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{253C448D-6DEE-44D4-9982-88FE9A7C3069}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C0CBE584-E111-47F1-BC4B-3DD5CCC69861}"
 	ProjectSection(SolutionItems) = preProject
-		src\global.json = src\global.json
+		global.json = global.json
+		NuGet.Config = NuGet.Config
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{137C2B1B-D53E-4C9D-B73C-BE47A3EA3ABC}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleTokenProvider.Test", "test\SimpleTokenProvider.Test\SimpleTokenProvider.Test.xproj", "{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleTokenProvider", "src\SimpleTokenProvider\SimpleTokenProvider.xproj", "{F2336869-C552-40AC-8507-36A3C2A2C1DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +23,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F2336869-C552-40AC-8507-36A3C2A2C1DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F2336869-C552-40AC-8507-36A3C2A2C1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2336869-C552-40AC-8507-36A3C2A2C1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +36,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74} = {137C2B1B-D53E-4C9D-B73C-BE47A3EA3ABC}
 		{F2336869-C552-40AC-8507-36A3C2A2C1DE} = {253C448D-6DEE-44D4-9982-88FE9A7C3069}
 	EndGlobalSection
 EndGlobal

@@ -22,7 +22,7 @@ namespace SimpleTokenProvider
         /// <param name="app">The <see cref="IApplicationBuilder"/> to add the middleware to.</param>
         /// <param name="options">A  <see cref="JwtBearerOptions"/> that specifies options for the middleware.</param>
         /// <returns>A reference to this instance after the operation has completed.</returns>
-        public static IApplicationBuilder UseJwtBearerAuthentication(this IApplicationBuilder app, TokenProviderOptions options)
+        public static IApplicationBuilder UseSimpleTokenProvider(this IApplicationBuilder app, TokenProviderOptions options)
         {
             if (app == null)
             {
