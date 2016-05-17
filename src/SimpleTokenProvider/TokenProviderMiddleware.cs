@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Nate Barbettini. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
