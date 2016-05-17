@@ -4,11 +4,12 @@
     "Microsoft.AspNetCore.Http.Abstractions": "1.0.0-rc2-final",
     "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc2-final",
     "Microsoft.Extensions.Logging": "1.0.0-rc2-final",
-    "Microsoft.Extensions.Options": "1.0.0-rc2-final"
+    "Microsoft.Extensions.Options": "1.0.0-rc2-final",
+    "System.IdentityModel.Tokens.Jwt": "5.0.0-rc2-304180813"
   },
   "description": "Simple authentication token provider for ASP.NET Core.",
   "frameworks": {
-    "netstandard1.3": {
+    "netstandard1.4": {
       "dependencies": {
         "System.Runtime": "4.1.0-rc2-24027"
       }
