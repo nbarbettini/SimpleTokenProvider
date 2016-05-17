@@ -14,7 +14,10 @@ namespace SimpleTokenProvider.Test
     {
         private void ConfigureAuth(IApplicationBuilder app)
         {
+            // The secret key every token will be signed with.
+            // Keep this safe on the server!
             var secretKey = "mysupersecret_secretkey!123";
+
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey)),
                 SecurityAlgorithms.HmacSha256);
@@ -37,7 +40,7 @@ namespace SimpleTokenProvider.Test
                 return new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { });
             }
 
-            // Credentials are invalid, or acccount doesn't exist
+            // Credentials are invalid, or account doesn't exist
             return null;
         }
     }

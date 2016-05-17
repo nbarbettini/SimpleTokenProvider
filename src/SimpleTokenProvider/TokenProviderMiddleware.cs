@@ -77,7 +77,7 @@ namespace SimpleTokenProvider
 
             var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Jti, _options.NonceGenerator(identity)),
+                new Claim(JwtRegisteredClaimNames.Jti, _options.NonceGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
             };
 

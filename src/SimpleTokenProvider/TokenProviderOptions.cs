@@ -49,7 +49,7 @@ namespace SimpleTokenProvider
         /// Generates a random value (nonce) for each generated token.
         /// </summary>
         /// <remarks>The default nonce is a random GUID.</remarks>
-        public Func<ClaimsIdentity, string> NonceGenerator { get; set; }
-            = new Func<ClaimsIdentity, string>(_ => Guid.NewGuid().ToString());
+        public Func<string> NonceGenerator { get; set; }
+            = new Func<string>(() => Guid.NewGuid().ToString());
     }
 }
