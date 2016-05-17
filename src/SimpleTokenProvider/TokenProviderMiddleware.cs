@@ -62,7 +62,6 @@ namespace SimpleTokenProvider
 
             var username = context.Request.Form["username"];
             var password = context.Request.Form["password"];
-            
             var identity = _options.IdentityResolver(username, password);
             if (identity == null)
             {
@@ -73,19 +72,9 @@ namespace SimpleTokenProvider
 
             var now = DateTime.UtcNow;
 
-            var handler = new JwtSecurityTokenHandler();
-            //var securityToken = handler.CreateToken(new SecurityTokenDescriptor()
-            //{
-            //    Issuer = _options.Issuer,
-            //    Audience = _options.Audience,
-            //    SigningCredentials = _options.SigningCredentials,
-            //    Subject = identity,
-            //    Expires = DateTime.UtcNow.Add(_options.Expiration),
-            //    NotBefore = DateTime.UtcNow,
-            //});
             var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, _options.NonceGenerator(identity)),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
             };
 
@@ -138,6 +127,11 @@ namespace SimpleTokenProvider
             if (options.SigningCredentials == null)
             {
                 throw new ArgumentNullException(nameof(TokenProviderOptions.SigningCredentials));
+            }
+
+            if (options.NonceGenerator == null)
+            {
+                throw new ArgumentNullException(nameof(TokenProviderOptions.NonceGenerator));
             }
         }
 
