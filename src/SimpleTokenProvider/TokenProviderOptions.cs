@@ -4,6 +4,7 @@
 
 using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
 namespace SimpleTokenProvider
@@ -43,13 +44,13 @@ namespace SimpleTokenProvider
         /// <summary>
         /// Resolves a user identity given a username and password.
         /// </summary>
-        public Func<string, string, ClaimsIdentity> IdentityResolver { get; set; }
+        public Func<string, string, Task<ClaimsIdentity>> IdentityResolver { get; set; }
 
         /// <summary>
         /// Generates a random value (nonce) for each generated token.
         /// </summary>
         /// <remarks>The default nonce is a random GUID.</remarks>
-        public Func<string> NonceGenerator { get; set; }
-            = new Func<string>(() => Guid.NewGuid().ToString());
+        public Func<Task<string>> NonceGenerator { get; set; }
+            = new Func<Task<string>>(() => Task.FromResult(Guid.NewGuid().ToString()));
     }
 }

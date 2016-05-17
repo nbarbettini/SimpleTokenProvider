@@ -65,7 +65,7 @@ namespace SimpleTokenProvider
 
             var username = context.Request.Form["username"];
             var password = context.Request.Form["password"];
-            var identity = _options.IdentityResolver(username, password);
+            var identity = await _options.IdentityResolver(username, password);
             if (identity == null)
             {
                 context.Response.StatusCode = 400;
@@ -77,7 +77,7 @@ namespace SimpleTokenProvider
 
             var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Jti, _options.NonceGenerator()),
+                new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
             };
 

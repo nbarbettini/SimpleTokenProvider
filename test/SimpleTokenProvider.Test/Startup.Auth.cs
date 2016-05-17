@@ -32,16 +32,16 @@ namespace SimpleTokenProvider.Test
             });
         }
 
-        private ClaimsIdentity GetIdentity(string username, string password)
+        private Task<ClaimsIdentity> GetIdentity(string username, string password)
         {
             // Don't do this in production, obviously!
             if (username == "TEST" && password == "TEST123")
             {
-                return new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { });
+                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { }));
             }
 
             // Credentials are invalid, or account doesn't exist
-            return null;
+            return Task.FromResult<ClaimsIdentity>(null);
         }
     }
 }
