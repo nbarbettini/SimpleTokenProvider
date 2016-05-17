@@ -11,9 +11,9 @@ using Newtonsoft.Json;
 namespace SimpleTokenProvider
 {
     /// <summary>
-    /// TODO
-    /// Bearer authentication middleware component which is added to an HTTP pipeline. This class is not
-    /// created by application code directly, instead it is added by calling the the IAppBuilder UseJwtBearerAuthentication
+    /// Token generator middleware component which is added to an HTTP pipeline.
+    /// This class is not created by application code directly,
+    /// instead it is added by calling the <see cref="TokenProviderAppBuilderExtensions.UseSimpleTokenProvider(Microsoft.AspNetCore.Builder.IApplicationBuilder, TokenProviderOptions)"/>
     /// extension method.
     /// </summary>
     public class TokenProviderMiddleware
