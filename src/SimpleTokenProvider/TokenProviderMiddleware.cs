@@ -75,12 +75,16 @@ namespace SimpleTokenProvider
 
             var now = DateTime.UtcNow;
 
+            // Specifically add the jti (nonce), iat (issued timestamp), and sub (subject/user) claims.
+            // You can add other claims here, if you want.
             var claims = new Claim[]
             {
+                new Claim(JwtRegisteredClaimNames.Sub, username),
                 new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
             };
 
+            // Create the JWT and write it to a string
             var jwt = new JwtSecurityToken(
                 issuer: _options.Issuer,
                 audience: _options.Audience,
@@ -96,6 +100,7 @@ namespace SimpleTokenProvider
                 expires_in = (int)_options.Expiration.TotalSeconds
             };
 
+            // Serialize and return the response
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
         }
