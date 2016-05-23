@@ -1,26 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Builder;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SimpleTokenProvider.Test
 {
     public partial class Startup
     {
+        // The secret key every token will be signed with.
+        // Keep this safe on the server!
+        private static readonly string secretKey = "mysupersecret_secretkey!123";
+
         private void ConfigureAuth(IApplicationBuilder app)
         {
-            // The secret key every token will be signed with.
-            // Keep this safe on the server!
-            var secretKey = "mysupersecret_secretkey!123";
-
-            var signingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey)),
-                SecurityAlgorithms.HmacSha256);
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
             app.UseSimpleTokenProvider(new TokenProviderOptions
             {
@@ -29,6 +26,36 @@ namespace SimpleTokenProvider.Test
                 Issuer = "ExampleIssuer",
                 SigningCredentials = signingCredentials,
                 IdentityResolver = GetIdentity
+            });
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = "ExampleIssuer",
+                ValidateAudience = true,
+                ValidAudience = "ExampleAudience",
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                AuthenticationScheme = "Cookie",
+                CookieName = "access_token",
+                TicketDataFormat = new CustomJwtDataFormat(
+                    SecurityAlgorithms.HmacSha256,
+                    tokenValidationParameters)
             });
         }
 
