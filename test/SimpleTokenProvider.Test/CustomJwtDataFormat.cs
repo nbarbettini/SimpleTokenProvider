@@ -43,7 +43,7 @@ namespace SimpleTokenProvider.Test
                     throw new ArgumentException($"Algorithm must be '{algorithm}'");
                 }
 
-                // Additional custom validation of JWT claims here
+                // Additional custom validation of JWT claims here (if any)
             }
             catch (SecurityTokenValidationException)
             {

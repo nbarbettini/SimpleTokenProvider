@@ -29,7 +29,7 @@ namespace SimpleTokenProvider.Test
 
             var tokenValidationParameters = new TokenValidationParameters
             {
-                // Most important: The signing key must match the one on your server!
+                // The signing key must match!
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
 
