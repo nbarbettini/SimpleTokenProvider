@@ -17,26 +17,34 @@ namespace SimpleTokenProvider.Test
         private void ConfigureAuth(IApplicationBuilder app)
         {
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
             app.UseSimpleTokenProvider(new TokenProviderOptions
             {
                 Path = "/api/token",
                 Audience = "ExampleAudience",
                 Issuer = "ExampleIssuer",
-                SigningCredentials = signingCredentials,
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
                 IdentityResolver = GetIdentity
             });
 
             var tokenValidationParameters = new TokenValidationParameters
             {
+                // Most important: The signing key must match the one on your server!
+                ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
+
+                // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
                 ValidIssuer = "ExampleIssuer",
+
+                // Validate the JWT Audience (aud) claim
                 ValidateAudience = true,
                 ValidAudience = "ExampleAudience",
+
+                // Validate the token expiry
                 ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
+                
+                // If you want to allow a certain amount of clock drift, set that here:
                 ClockSkew = TimeSpan.Zero
             };
 
