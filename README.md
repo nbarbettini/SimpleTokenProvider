@@ -2,7 +2,9 @@
 
 This project demonstrates how to generate [JSON Web Tokens](https://en.wikipedia.org/wiki/JSON_Web_Token) (JWTs) for token authentication in ASP.NET Core RC2. The functionality is wrapped up in a reusable middleware component.
 
-This has **not been tested in production**, so explore and use at your own risk!
+Original blog post: (todo)
+
+This has **not** been tested in production, so explore and use at your own risk!
 
 ## Configuring the middleware
 
