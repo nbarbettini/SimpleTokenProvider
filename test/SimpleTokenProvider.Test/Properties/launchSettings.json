@@ -16,11 +16,8 @@
         "ASPNET_ENV": "Development"
       }
     },
-    "web": {
-      "commandName": "web",
-      "environmentVariables": {
-        "Hosting:Environment": "Development"
-      }
+    "dotnet": {
+      "commandName": "Project"
     }
   }
 }
