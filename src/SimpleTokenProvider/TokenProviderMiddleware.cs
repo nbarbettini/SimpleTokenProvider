@@ -43,28 +43,32 @@ namespace SimpleTokenProvider
             };
         }
 
-        public async Task Invoke(HttpContext context)
+        public Task Invoke(HttpContext context)
         {
             // If the request path doesn't match, skip
             if (!context.Request.Path.Equals(_options.Path, StringComparison.Ordinal))
             {
-                await _next(context);
-                return;
+                return _next(context);
+            }
+
+            // Request must be POST with Content-Type: application/x-www-form-urlencoded
+            if (!context.Request.Method.Equals("POST")
+               || !context.Request.HasFormContentType)
+            {
+                context.Response.StatusCode = 400;
+                return context.Response.WriteAsync("Bad request.");
             }
 
             _logger.LogInformation("Handling request: " + context.Request.Path);
 
-            // Request must be POST with Content-Type: application/x-www-form-urlencoded
-            if (!context.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase)
-                || !context.Request.HasFormContentType)
-            {
-                context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("Bad request.");
-                return;
-            }
+            return GenerateToken(context);
+        }
 
+        private async Task GenerateToken(HttpContext context)
+        {
             var username = context.Request.Form["username"];
             var password = context.Request.Form["password"];
+
             var identity = await _options.IdentityResolver(username, password);
             if (identity == null)
             {
@@ -76,7 +80,7 @@ namespace SimpleTokenProvider
             var now = DateTime.UtcNow;
 
             // Specifically add the jti (nonce), iat (issued timestamp), and sub (subject/user) claims.
-            // You can add other claims here, if you want.
+            // You can add other claims here, if you want:
             var claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, username),
@@ -143,15 +147,12 @@ namespace SimpleTokenProvider
             }
         }
 
-        private static readonly DateTimeOffset UnixEpoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
-        
-
         /// <summary>
         /// Get this datetime as a Unix epoch timestamp (seconds since Jan 1, 1970, midnight UTC).
         /// </summary>
         /// <param name="date">The date to convert.</param>
         /// <returns>Seconds since Unix epoch.</returns>
         public static long ToUnixEpochDate(DateTime date)
-            => (long)Math.Round((date.ToUniversalTime() - UnixEpoch).TotalSeconds);
+            => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
     }
 }
