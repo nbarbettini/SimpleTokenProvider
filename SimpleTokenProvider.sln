@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{253C448D-6DEE-44D4-9982-88FE9A7C3069}"
 EndProject
@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{137C2B1B-D
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleTokenProvider.Test", "test\SimpleTokenProvider.Test\SimpleTokenProvider.Test.xproj", "{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleTokenProvider", "src\SimpleTokenProvider\SimpleTokenProvider.xproj", "{F2336869-C552-40AC-8507-36A3C2A2C1DE}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleTokenProvider", "src\SimpleTokenProvider\SimpleTokenProvider.xproj", "{7296ED00-D6D3-4EA1-9EC6-A3E757ADF8B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,16 +26,16 @@ Global
 		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2336869-C552-40AC-8507-36A3C2A2C1DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2336869-C552-40AC-8507-36A3C2A2C1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2336869-C552-40AC-8507-36A3C2A2C1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2336869-C552-40AC-8507-36A3C2A2C1DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7296ED00-D6D3-4EA1-9EC6-A3E757ADF8B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7296ED00-D6D3-4EA1-9EC6-A3E757ADF8B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7296ED00-D6D3-4EA1-9EC6-A3E757ADF8B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7296ED00-D6D3-4EA1-9EC6-A3E757ADF8B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74} = {137C2B1B-D53E-4C9D-B73C-BE47A3EA3ABC}
-		{F2336869-C552-40AC-8507-36A3C2A2C1DE} = {253C448D-6DEE-44D4-9982-88FE9A7C3069}
+		{7296ED00-D6D3-4EA1-9EC6-A3E757ADF8B0} = {253C448D-6DEE-44D4-9982-88FE9A7C3069}
 	EndGlobalSection
 EndGlobal
