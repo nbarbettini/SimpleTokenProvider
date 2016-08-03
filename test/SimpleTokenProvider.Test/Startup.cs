@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,7 @@ namespace SimpleTokenProvider.Test
         // The secret key every token will be signed with.
         // In production, you should store this securely in environment variables
         // or a key management tool. Don't hardcode this into your application!
-        private static readonly string secretKey = "mysupersecret_secretkey!123";
+        private static readonly string secretKey = "mysupersecret_secretKey!123";
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
@@ -41,9 +42,8 @@ namespace SimpleTokenProvider.Test
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
             var options = new TokenProviderOptions
             {
-                Audience = "ExampleAudience",
-                Issuer = "ExampleIssuer",
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+                Expiration = TimeSpan.FromDays(30)
             };
 
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));

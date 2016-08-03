@@ -62,7 +62,7 @@ namespace SimpleTokenProvider
                 return;
             }
 
-            var now = DateTime.UtcNow;
+            var now = DateTimeOffset.UtcNow;
 
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
             // You can add other claims here, if you want:
@@ -70,7 +70,7 @@ namespace SimpleTokenProvider
             {
                 new Claim(JwtRegisteredClaimNames.Sub, username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
+                new Claim(JwtRegisteredClaimNames.Iat, now.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
             };
 
             // Create the JWT and write it to a string
@@ -78,8 +78,8 @@ namespace SimpleTokenProvider
                 issuer: _options.Issuer,
                 audience: _options.Audience,
                 claims: claims,
-                notBefore: now,
-                expires: now.Add(_options.Expiration),
+                notBefore: now.LocalDateTime,
+                expires: now.LocalDateTime.Add(_options.Expiration),
                 signingCredentials: _options.SigningCredentials);
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
@@ -105,13 +105,5 @@ namespace SimpleTokenProvider
             // Credentials are invalid, or account doesn't exist
             return Task.FromResult<ClaimsIdentity>(null);
         }
-
-        /// <summary>
-        /// Get this datetime as a Unix epoch timestamp (seconds since Jan 1, 1970, midnight UTC).
-        /// </summary>
-        /// <param name="date">The date to convert.</param>
-        /// <returns>Seconds since Unix epoch.</returns>
-        public static long ToUnixEpochDate(DateTime date)
-            => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
     }
 }
