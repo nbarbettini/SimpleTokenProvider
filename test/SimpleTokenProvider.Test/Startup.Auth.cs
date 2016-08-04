@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SimpleTokenProvider.Test
 {
@@ -18,13 +19,15 @@ namespace SimpleTokenProvider.Test
         {
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
+            var context = app.ApplicationServices.GetService<SimpleContext>();
+
             app.UseSimpleTokenProvider(new TokenProviderOptions
             {
                 Path = "/api/token",
                 Audience = "ExampleAudience",
                 Issuer = "ExampleIssuer",
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                IdentityResolver = GetIdentity
+                IdentityResolver = (username, password) => ValidateIdentity(context, username, password)
             });
 
             var tokenValidationParameters = new TokenValidationParameters
@@ -67,16 +70,13 @@ namespace SimpleTokenProvider.Test
             });
         }
 
-        private Task<ClaimsIdentity> GetIdentity(string username, string password)
+        private Task<ClaimsIdentity> ValidateIdentity(SimpleContext context, string username, string password)
         {
-            // Don't do this in production, obviously!
-            if (username == "TEST" && password == "TEST123")
-            {
-                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { }));
-            }
+            // Access the database using the context
+            // Here you'd need to do things like hash the password
+            // and do a lookup to see if the user + password hash exists
 
-            // Credentials are invalid, or account doesn't exist
-            return Task.FromResult<ClaimsIdentity>(null);
+            throw new NotImplementedException();
         }
     }
 }
