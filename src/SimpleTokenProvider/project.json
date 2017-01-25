@@ -1,13 +1,13 @@
-﻿{
+{
   "authors": [ "Nate Barbettini" ],
   "dependencies": {
-    "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
-    "Microsoft.Extensions.Options": "1.0.0",
-    "Microsoft.Extensions.Logging": "1.0.0",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0",
-    "NETStandard.Library": "1.6.0",
-    "Microsoft.IdentityModel.Tokens": "5.0.0",
-    "System.IdentityModel.Tokens.Jwt": "5.0.0"
+    "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
+    "Microsoft.Extensions.Configuration.Json": "1.1.0",
+    "Microsoft.Extensions.Logging": "1.1.0",
+    "Microsoft.Extensions.Options": "1.1.0",
+    "Microsoft.IdentityModel.Tokens": "5.1.2",
+    "NETStandard.Library": "1.6.1",
+    "System.IdentityModel.Tokens.Jwt": "5.1.2"
   },
   "description": "Simple authentication token provider for ASP.NET Core.",
   "frameworks": {
