@@ -1,6 +1,6 @@
 # Simple Token Provider Middleware for ASP.NET
 
-This project demonstrates how to generate [JSON Web Tokens](https://en.wikipedia.org/wiki/JSON_Web_Token) (JWTs) for token authentication in ASP.NET Core RC2. The functionality is wrapped up in a reusable middleware component.
+This project demonstrates how to generate [JSON Web Tokens](https://en.wikipedia.org/wiki/JSON_Web_Token) (JWTs) for token authentication and how to generate a refreshed token in ASP.NET Core RC2. The functionality is wrapped up in a reusable middleware component.
 
 Original blog post: [Token Authentication in ASP.NET Core](https://stormpath.com/blog/token-authentication-asp-net-core)
 
@@ -14,6 +14,7 @@ The token provider endpoint can be added to your pipeline in `Configure()`:
 app.UseSimpleTokenProvider(new TokenProviderOptions
 {
     Path = "/api/token",
+    RefreshPath = "api/refresh-token",
     Audience = "ExampleAudience",
     Issuer = "ExampleIssuer",
     SigningCredentials = signingCredentials,
@@ -24,6 +25,7 @@ app.UseSimpleTokenProvider(new TokenProviderOptions
 The options are:
 
 * **Path** (optional) - The endpoint path relative to the server root. Default: `/token`
+* **RefreshPath** (optional) - The endpoint path relative to the server root used for token refresh. Default: `/refresh-token`
 * **Audience** - The JWT `aud` claim value.
 * **Issuer** - The JWT `iss` claim value.
 * **Expiration** (optional) - The expiration duration for new tokens. Default: 5 minutes
@@ -65,6 +67,7 @@ private Task<ClaimsIdentity> GetIdentity(string username, string password)
 
 At a high level, the middleware does the following:
 
+### Create
 * Intercepts requests to `options.Path`
 * Verifies the request is a POST with `Content-Type: application/x-www-form-urlencoded`
 * Pulls the username and password out of the form body
@@ -78,6 +81,13 @@ At a high level, the middleware does the following:
   * `iss` (issuer) - `options.Issuer`
   * `aud` (audience) - `options.Audience`
 * Encodes the JWT to a string and sends it back to the client
+
+### Refresh
+* Intercepts requests to `options.RefreshPath`
+* Verifies the request is a POST with `Content-Type: application/x-www-form-urlencoded` (probably not required)
+* Validates passed JWT.
+* Based on passed token it creates a new one with new expiration date.
+* Encodes the new JWT to a string and sends it back to the client
 
 ## Trying it out
 
@@ -95,6 +105,24 @@ You should get a `200 OK` response:
 ```
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJURVNUIiwianRpIjoiYzRjYzdhMmUtMjI0OS00ZWUzLWJkM2MtYzU5MDkzYmU5MGU1IiwiaWF0IjoxNDYzNTMwMDI0LCJuYmYiOjE0NjM1MzAwMjMsImV4cCI6MTQ2MzUzMDMyMywiaXNzIjoiRXhhbXBsZUlzc3VlciIsImF1ZCI6IkV4YW1wbGVBdWRpZW5jZSJ9.mI0NPO437IuBSt5kmayy5XhNFEHVF4IyMkKsmtas6w8",
+  "expires_in": 300
+}
+```
+
+And for refresh:
+
+```
+POST /refresh-token (or whatever you set options.RefreshPath to)
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJURVNUIiwianRpIjoiYzRjYzdhMmUtMjI0OS00ZWUzLWJkM2MtYzU5MDkzYmU5MGU1IiwiaWF0IjoxNDYzNTMwMDI0LCJuYmYiOjE0NjM1MzAwMjMsImV4cCI6MTQ2MzUzMDMyMywiaXNzIjoiRXhhbXBsZUlzc3VlciIsImF1ZCI6IkV4YW1wbGVBdWRpZW5jZSJ9.mI0NPO437IuBSt5kmayy5XhNFEHVF4IyMkKsmtas6w8
+
+```
+
+You should get a `200 OK` response:
+
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJURVNUIiwianRpIjoiNjY1NjBlMTctZGRmNy00MWNhLWE1NWMtMjgxNmZjZjU0NzU2IiwiaWF0IjoxNDgwNjcwMjIxLCJuYmYiOjE0ODA2NzAyNzAsImV4cCI6MTQ4MDY3MDU3MCwiaXNzIjoiRXhhbXBsZUlzc3VlciIsImF1ZCI6WyJFeGFtcGxlQXVkaWVuY2UiLCJFeGFtcGxlQXVkaWVuY2UiLCJFeGFtcGxlQXVkaWVuY2UiXX0.9WMoq2V0SE8ECs2Qzk2ymGL-BeYrPJc9_oRkLhdmW2g",
   "expires_in": 300
 }
 ```

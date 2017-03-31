@@ -17,16 +17,6 @@ namespace SimpleTokenProvider.Test
         private void ConfigureAuth(IApplicationBuilder app)
         {
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-
-            app.UseSimpleTokenProvider(new TokenProviderOptions
-            {
-                Path = "/api/token",
-                Audience = "ExampleAudience",
-                Issuer = "ExampleIssuer",
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                IdentityResolver = GetIdentity
-            });
-
             var tokenValidationParameters = new TokenValidationParameters
             {
                 // The signing key must match!
@@ -43,10 +33,20 @@ namespace SimpleTokenProvider.Test
 
                 // Validate the token expiry
                 ValidateLifetime = true,
-                
+
                 // If you want to allow a certain amount of clock drift, set that here:
                 ClockSkew = TimeSpan.Zero
             };
+
+            app.UseSimpleTokenProvider(new TokenProviderOptions
+            {
+                Path = "/api/token",
+                RefreshPath = "/api/refresh-token",
+                Audience = "ExampleAudience",
+                Issuer = "ExampleIssuer",
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+                IdentityResolver = GetIdentity
+            }, tokenValidationParameters);
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {

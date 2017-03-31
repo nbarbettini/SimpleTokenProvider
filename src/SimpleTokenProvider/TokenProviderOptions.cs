@@ -19,6 +19,11 @@ namespace SimpleTokenProvider
         /// </summary>
         /// <remarks>The default path is <c>/token</c>.</remarks>
         public string Path { get; set; } = "/token";
+        /// <summary>
+        /// The relative path for refresh token.
+        /// </summary>
+        /// <remarks>The default path is <c>/refresh-token</c></remarks>
+        public string RefreshPath { get; set; } = "/refresh-token";
 
         /// <summary>
         ///  The Issuer (iss) claim for generated tokens.

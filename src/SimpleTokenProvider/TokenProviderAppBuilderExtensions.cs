@@ -4,6 +4,7 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SimpleTokenProvider
 {
@@ -17,7 +18,7 @@ namespace SimpleTokenProvider
         /// <param name="app">The <see cref="IApplicationBuilder"/> to add the middleware to.</param>
         /// <param name="options">A  <see cref="TokenProviderOptions"/> that specifies options for the middleware.</param>
         /// <returns>A reference to this instance after the operation has completed.</returns>
-        public static IApplicationBuilder UseSimpleTokenProvider(this IApplicationBuilder app, TokenProviderOptions options)
+        public static IApplicationBuilder UseSimpleTokenProvider(this IApplicationBuilder app, TokenProviderOptions options, TokenValidationParameters tokenValidationParameters)
         {
             if (app == null)
             {
@@ -29,7 +30,12 @@ namespace SimpleTokenProvider
                 throw new ArgumentNullException(nameof(options));
             }
 
-            return app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
+            if (tokenValidationParameters == null)
+            {
+                throw new ArgumentNullException(nameof(tokenValidationParameters));
+            }
+
+            return app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options), tokenValidationParameters);
         }
     }
 }
