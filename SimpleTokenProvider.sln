@@ -1,20 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{253C448D-6DEE-44D4-9982-88FE9A7C3069}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C0CBE584-E111-47F1-BC4B-3DD5CCC69861}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{137C2B1B-D53E-4C9D-B73C-BE47A3EA3ABC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleTokenProvider.Test", "test\SimpleTokenProvider.Test\SimpleTokenProvider.Test.xproj", "{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTokenProvider.Test", "test\SimpleTokenProvider.Test\SimpleTokenProvider.Test.csproj", "{D07748BD-2C78-4DB8-AB9E-B26D89E1CE74}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleTokenProvider", "src\SimpleTokenProvider\SimpleTokenProvider.xproj", "{7296ED00-D6D3-4EA1-9EC6-A3E757ADF8B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTokenProvider", "src\SimpleTokenProvider\SimpleTokenProvider.csproj", "{7296ED00-D6D3-4EA1-9EC6-A3E757ADF8B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
