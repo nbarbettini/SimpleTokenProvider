@@ -14,8 +14,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="1.1.1" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.1.2" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.1.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.1.3" />
   </ItemGroup>
 
 </Project>
