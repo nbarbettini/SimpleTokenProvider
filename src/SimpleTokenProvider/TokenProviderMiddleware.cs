@@ -3,6 +3,7 @@
 
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -86,6 +87,10 @@ namespace SimpleTokenProvider
                 new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
             };
+
+            // Combine claims from IdentityResolver with Jwt registered claims.
+            var claimsList = identity.Claims.ToList();
+            claimsList.AddRange(claims);
 
             // Create the JWT and write it to a string
             var jwt = new JwtSecurityToken(
