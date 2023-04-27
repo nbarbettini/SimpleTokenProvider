@@ -1,5 +1,14 @@
 # Simple Token Provider Middleware for ASP.NET
 
+### :warning: Deprecated: This project and the concepts it uses are outdated!
+At the time it was created, there weren't many resources available for token authentication in early ASP.NET Core. Nowadays, I would not recommend doing this yourself!
+
+Here are some resources for doing token authentication in modern ASP.NET Core:
+- [Bearer Token Authentication in ASP.NET Core](https://devblogs.microsoft.com/dotnet/bearer-token-authentication-in-asp-net-core/) on the Microsoft .NET blog
+- [OpenIddict](https://documentation.openiddict.com/)
+
+---
+
 This project demonstrates how to generate [JSON Web Tokens](https://en.wikipedia.org/wiki/JSON_Web_Token) (JWTs) for token authentication in ASP.NET Core RC2. The functionality is wrapped up in a reusable middleware component.
 
 Original blog post: [Token Authentication in ASP.NET Core](https://stormpath.com/blog/token-authentication-asp-net-core)
